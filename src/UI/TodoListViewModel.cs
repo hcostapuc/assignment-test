@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using Assignment.Application.Common.Exceptions;
 using Assignment.Application.TodoLists.Commands.CreateTodoList;
 using Caliburn.Micro;
 using MediatR;
@@ -42,7 +39,7 @@ public class TodoListViewModel : Screen
             await _sender.Send(new CreateTodoListCommand(Title));
             await TryCloseAsync(true);
         }
-        catch (ValidationException validationException) 
+        catch (ValidationException validationException)
         {
             MessageBox.Show(validationException.DisplayErrorsValueText('\n'), nameof(validationException));
         }

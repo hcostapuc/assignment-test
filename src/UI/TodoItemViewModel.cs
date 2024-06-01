@@ -64,7 +64,7 @@ public class TodoItemViewModel : Screen
         }
         catch (ValidationException validationException)
         {
-            MessageBox.Show(validationException.DisplayErrorsValueText('\n'),nameof(validationException));
+            MessageBox.Show(validationException.DisplayErrorsValueText('\n'), nameof(validationException));
         }
     }
 

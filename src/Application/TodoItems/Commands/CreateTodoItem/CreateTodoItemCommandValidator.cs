@@ -23,6 +23,6 @@ public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCo
 
     private async Task<bool> BeUniqueTitle(BriefTodoItem todoItem, CancellationToken cancellationToken) =>
         !await _context.TodoItems
-            .AnyAsync(l => l.Title.ToLower() == todoItem.Title.ToLower() && 
+            .AnyAsync(l => l.Title.ToLower() == todoItem.Title.ToLower() &&
                            l.ListId == todoItem.ListId, cancellationToken);
 }
