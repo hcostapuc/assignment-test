@@ -95,6 +95,7 @@ internal class TodoManagmentViewModel : Screen
 
     private async void DoneTodoItem(object obj)
     {
-        await _sender.Send(new DoneTodoItemCommand(SelectedItem.Id));
+        await _sender.Send(new DoneTodoItemCommand(SelectedItem.Id))
+                     .ContinueWith(prevTask => RefereshTodoLists());
     }
 }
