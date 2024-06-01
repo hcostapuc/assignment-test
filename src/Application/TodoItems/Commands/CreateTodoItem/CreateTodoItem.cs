@@ -9,7 +9,7 @@ public record CreateTodoItemCommand : IRequest<int>
 {
     public int ListId { get; init; }
 
-    public string? Title { get; init; }
+    public required string Title { get; init; }
     public string? Note { get; init; }
     public PriorityLevel Priority { get; set; }
 }
