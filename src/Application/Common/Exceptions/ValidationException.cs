@@ -19,4 +19,7 @@ public class ValidationException : Exception
     }
 
     public IDictionary<string, string[]> Errors { get; }
+
+    public string DisplayErrorsValueText(char separator) =>
+        string.Join(separator, Errors.Values.SelectMany(a => a));
 }
