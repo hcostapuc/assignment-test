@@ -10,8 +10,8 @@ public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCo
     public CreateTodoItemCommandValidator(IApplicationDbContext context)
     {
         RuleFor(v => v.Title)
-            .MaximumLength(200)
-            .NotEmpty();
+            .MaximumLength(200).WithMessage("Title must be less than 200 characters")
+            .NotEmpty().WithMessage("Title is required");
 
         RuleFor(v => new BriefTodoItem(v.ListId, v.Title))
             .MustAsync(BeUniqueTitle)
@@ -23,6 +23,6 @@ public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCo
 
     private async Task<bool> BeUniqueTitle(BriefTodoItem todoItem, CancellationToken cancellationToken) =>
         !await _context.TodoItems
-            .AnyAsync(l => l.Title.ToLower() == todoItem.Title.ToLower() || 
+            .AnyAsync(l => l.Title.ToLower() == todoItem.Title.ToLower() && 
                            l.ListId == todoItem.ListId, cancellationToken);
 }

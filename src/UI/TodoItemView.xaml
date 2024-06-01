@@ -4,7 +4,7 @@
         Height="300" Width="400">
     <StackPanel Margin="10">
         <Label Content="Title:"/>
-        <TextBox Text="{Binding CurrentItem.Title, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox MaxLength="200" Text="{Binding CurrentItem.Title, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label Content="Note:"/>
         <TextBox Text="{Binding CurrentItem.Note, UpdateSourceTrigger=PropertyChanged}"/>

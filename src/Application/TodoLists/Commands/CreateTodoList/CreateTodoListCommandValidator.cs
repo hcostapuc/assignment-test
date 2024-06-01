@@ -11,8 +11,8 @@ public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCo
         _context = context;
 
         RuleFor(v => v.Title)
-            .NotEmpty()
-            .MaximumLength(200)
+            .NotEmpty().WithMessage("Title is required")
+            .MaximumLength(200).WithMessage("Title must be less than 200 characters")
             .MustAsync(BeUniqueTitle)
                 .WithMessage("'{PropertyName}' must be unique.")
                 .WithErrorCode("Unique");

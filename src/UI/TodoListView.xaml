@@ -7,7 +7,7 @@
         Height="150" Width="800">
     <StackPanel Margin="10">
         <Label Content="Title:"/>
-        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox MaxLength="200" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Button Content="Save" Command="{Binding SaveCommand}"/>
         <Button Content="Cancel" Command="{Binding CloseCommand}"/>
