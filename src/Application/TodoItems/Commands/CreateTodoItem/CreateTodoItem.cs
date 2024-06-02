@@ -1,5 +1,5 @@
 ﻿using Assignment.Application.Common.Interfaces;
-using Assignment.Domain.Entities;
+using Assignment.Domain.Entities.Todo;
 using Assignment.Domain.Enums;
 using Assignment.Domain.Events;
 

@@ -1,5 +1,5 @@
 ﻿using Assignment.Application.Common.Interfaces;
-using Assignment.Domain.Entities;
+using Assignment.Domain.Entities.Todo;
 
 namespace Assignment.Application.TodoLists.Commands.CreateTodoList;
 

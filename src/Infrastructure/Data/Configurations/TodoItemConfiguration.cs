@@ -1,4 +1,4 @@
-﻿using Assignment.Domain.Entities;
+﻿using Assignment.Domain.Entities.Todo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

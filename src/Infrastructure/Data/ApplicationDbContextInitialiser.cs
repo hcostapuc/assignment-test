@@ -1,5 +1,5 @@
 ﻿using Assignment.Domain.Constants;
-using Assignment.Domain.Entities;
+using Assignment.Domain.Entities.Todo;
 using Assignment.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

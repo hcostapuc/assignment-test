@@ -1,4 +1,4 @@
-﻿using Assignment.Domain.Entities;
+﻿using Assignment.Domain.Entities.Todo;
 
 namespace Assignment.Application.TodoLists.Queries.GetTodos;
 

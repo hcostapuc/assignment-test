@@ -1,4 +1,6 @@
-﻿namespace Assignment.Domain.Events;
+﻿using Assignment.Domain.Entities.Todo;
+
+namespace Assignment.Domain.Events;
 
 public class TodoItemCompletedEvent : BaseEvent
 {

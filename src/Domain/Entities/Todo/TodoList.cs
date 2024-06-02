@@ -1,4 +1,4 @@
-﻿namespace Assignment.Domain.Entities;
+﻿namespace Assignment.Domain.Entities.Todo;
 
 public class TodoList : BaseAuditableEntity
 {
