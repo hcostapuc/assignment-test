@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Assignment.Application.Common.Behaviours;
+using Assignment.Application.Common.Cache;
+using Assignment.Application.Common.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Assignment.Application;
@@ -10,7 +12,8 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
+        services.AddSingleton<IMemoryCache, MemoryCache>();
+        
         services.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
