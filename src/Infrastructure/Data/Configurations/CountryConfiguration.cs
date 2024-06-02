@@ -1,0 +1,11 @@
+﻿using Assignment.Domain.Entities.WeatherForecast;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Assignment.Infrastructure.Data.Configurations;
+public class CountryConfiguration : IEntityTypeConfiguration<Country>
+{
+    public void Configure(EntityTypeBuilder<Country> builder) =>
+        builder.Property(x => x.Name)
+               .IsRequired();
+}
