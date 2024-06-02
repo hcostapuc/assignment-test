@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using Assignment.Application.TodoItems.Commands.DoneTodoItem;
 using Assignment.Application.TodoLists.Queries.GetTodos;
 using Caliburn.Micro;
@@ -10,16 +11,16 @@ internal class TodoManagmentViewModel : Screen
     private readonly ISender _sender;
     private readonly IWindowManager _windowManager;
 
-    private IList<TodoListDto> todoLists;
+    private IList<TodoListDto> _todoLists;
     public IList<TodoListDto> TodoLists
     {
         get
         {
-            return todoLists;
+            return _todoLists;
         }
         set
         {
-            todoLists = value;
+            _todoLists = value;
             NotifyOfPropertyChange(() => TodoLists);
         }
     }
@@ -43,6 +44,22 @@ internal class TodoManagmentViewModel : Screen
         {
             _selectedItem = value;
             NotifyOfPropertyChange(() => SelectedItem);
+            IsDoneButtonVisible = _selectedItem is not null && !_selectedItem.Done;
+        }
+    }
+
+    private bool _isDoneButtonVisible = false;
+
+    public bool IsDoneButtonVisible
+    {
+        get => _isDoneButtonVisible;
+        set
+        {
+            if (_isDoneButtonVisible != value)
+            {
+                _isDoneButtonVisible = value;
+                NotifyOfPropertyChange(() => IsDoneButtonVisible);
+            }
         }
     }
 
