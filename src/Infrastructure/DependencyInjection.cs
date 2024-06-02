@@ -3,6 +3,7 @@ using Assignment.Domain.Constants;
 using Assignment.Infrastructure.Data;
 using Assignment.Infrastructure.Data.Interceptors;
 using Assignment.Infrastructure.Identity;
+using Assignment.Infrastructure.Integration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -22,6 +23,7 @@ public static class DependencyInjection
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+        services.AddScoped<IWeatherForecastApi, WeatherForecastApi>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {

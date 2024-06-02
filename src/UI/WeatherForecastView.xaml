@@ -20,6 +20,9 @@
                   SelectedValuePath="Id"
                   ItemsSource="{Binding CityCollection}"
                   SelectedItem="{Binding SelectedCity}" />
+        
+        <Label Content="Temperature:"/>
+        <TextBlock Text="{Binding CityTemperature, StringFormat='{}{0} °F'}" />
 
         <Button Content="Cancel" Command="{Binding CloseCommand}"/>
     </StackPanel>

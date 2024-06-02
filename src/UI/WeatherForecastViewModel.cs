@@ -10,6 +10,7 @@ internal class WeatherForecastViewModel : Screen
 {
     private readonly ISender _sender;
     private readonly IWindowManager _windowManager;
+    private readonly IWeatherForecastApi _weatherForecastApi;
 
     private IList<CountryDto> _countryCollection;
     public IList<CountryDto> CountryCollection
@@ -34,11 +35,12 @@ internal class WeatherForecastViewModel : Screen
             _selectedCountry = value;
             NotifyOfPropertyChange(() => SelectedCountry);
             NotifyOfPropertyChange(() => CityCollection);
-
         }
     }
 
+
     public IList<CityDto> CityCollection => SelectedCountry?.CityCollection;
+
 
     private CityDto _selectedCity;
     public CityDto SelectedCity
@@ -49,28 +51,36 @@ internal class WeatherForecastViewModel : Screen
             _selectedCity = value;
 
             NotifyOfPropertyChange(() => SelectedCity);
+            if(SelectedCity?.Name is not null)
+                CityTemperature = _weatherForecastApi.GetTemperature(SelectedCity.Name,DateTime.Now);
         }
     }
-
+    private int _cityTemperature;
+    public int CityTemperature
+    {
+        get => _cityTemperature;
+        set
+        {
+            _cityTemperature = value;
+            NotifyOfPropertyChange(() => CityTemperature);
+        }
+    }
     public ICommand CloseCommand { get; }
 
 
     public WeatherForecastViewModel(ISender sender,
-                                    IWindowManager windowManager)
+                                    IWindowManager windowManager,
+                                    IWeatherForecastApi weatherForecastApi)
     {
         _sender = sender;
         _windowManager = windowManager;
+        _weatherForecastApi = weatherForecastApi;
         CloseCommand = new RelayCommand(CloseExecute);
         Initialize();
     }
 
     private async void Initialize() =>
         await RefereshCountryList();
-
-    private Task<int> GetCityTemperatureAsync()
-    {
-        return Task.FromResult(8);
-    }
 
     private async Task RefereshCountryList()
     {
