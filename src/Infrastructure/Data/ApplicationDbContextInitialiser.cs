@@ -1,5 +1,5 @@
 ﻿using Assignment.Domain.Constants;
-using Assignment.Domain.Entities.Todo;
+using Assignment.Infrastructure.Data.Seeds;
 using Assignment.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -89,17 +89,16 @@ public class ApplicationDbContextInitialiser
         // Seed, if necessary
         if (!_context.TodoLists.Any())
         {
-            _context.TodoLists.Add(new TodoList
-            {
-                Title = "Todo List",
-                Items =
-                {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
-                }
-            });
+            _context.TodoLists.AddSeed();
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Default data
+        // Seed, if necessary
+        if (!_context.Country.Any())
+        {
+            _context.Country.AddSeed();
 
             await _context.SaveChangesAsync();
         }
