@@ -51,8 +51,13 @@ internal class WeatherForecastViewModel : Screen
             _selectedCity = value;
 
             NotifyOfPropertyChange(() => SelectedCity);
-            if(SelectedCity?.Name is not null)
-                CityTemperature = _weatherForecastApi.GetTemperature(SelectedCity.Name,DateTime.Now);
+            if (SelectedCity?.Name is not null)
+            {
+                CityTemperature = _weatherForecastApi.GetTemperature(SelectedCity.Name, DateTime.Now);
+                IsTemperatureVisible = true;
+            }
+            else
+                IsTemperatureVisible = false;
         }
     }
     private int _cityTemperature;
@@ -63,6 +68,21 @@ internal class WeatherForecastViewModel : Screen
         {
             _cityTemperature = value;
             NotifyOfPropertyChange(() => CityTemperature);
+        }
+    }
+
+    private bool _isTemperatureVisible = false;
+
+    public bool IsTemperatureVisible
+    {
+        get => _isTemperatureVisible;
+        set
+        {
+            if (_isTemperatureVisible != value)
+            {
+                _isTemperatureVisible = value;
+                NotifyOfPropertyChange(() => IsTemperatureVisible);
+            }
         }
     }
     public ICommand CloseCommand { get; }

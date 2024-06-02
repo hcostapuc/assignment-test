@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Assignment.UI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
-
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <StackPanel Margin="10">
         <Label Content="Countries:"/>
         <ComboBox x:Name="SelectedCountry"
@@ -20,9 +22,9 @@
                   SelectedValuePath="Id"
                   ItemsSource="{Binding CityCollection}"
                   SelectedItem="{Binding SelectedCity}" />
-        
-        <Label Content="Temperature:"/>
-        <TextBlock Text="{Binding CityTemperature, StringFormat='{}{0} °F'}" />
+
+        <Label Visibility="{Binding DataContext.IsTemperatureVisible, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Temperature:"/>
+        <TextBlock Visibility="{Binding DataContext.IsTemperatureVisible, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding CityTemperature, StringFormat='{}{0} °F'}" />
 
         <Button Content="Cancel" Command="{Binding CloseCommand}"/>
     </StackPanel>
