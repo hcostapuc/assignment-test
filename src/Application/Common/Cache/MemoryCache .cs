@@ -9,7 +9,7 @@ internal class MemoryCache : IMemoryCache
     public void Set<T>(string key, T value, TimeSpan expiration)
     {
         if (value is not null)
-            _cache[key] = new CacheItem(value, DateTime.Now.Add(expiration)); 
+            _cache[key] = new CacheItem(value, DateTime.Now.Add(expiration));
     }
 
     public T Get<T>(string key) =>

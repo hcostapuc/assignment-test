@@ -2,8 +2,6 @@
 using Assignment.Application.TodoLists.Commands.CreateTodoList;
 using Assignment.Domain.Entities.Todo;
 using AutoFixture;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Moq;
 
 namespace Application.UnitTests.TodoLists;
@@ -21,14 +19,14 @@ public class CreateTodoListCommandHandlerTest
 
         context.Setup(x => x.TodoLists.AddAsync(It.IsAny<TodoList>(), It.IsAny<CancellationToken>()))
                .Verifiable();
-        
+
         context.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
                .Verifiable();
 
         var handler = new CreateTodoListCommandHandler(context.Object);
 
         //Act
-        var result = await handler.Handle(command,new CancellationToken());
+        var result = await handler.Handle(command, new CancellationToken());
 
         //Assert
         context.Verify();

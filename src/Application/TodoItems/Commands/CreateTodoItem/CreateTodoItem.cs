@@ -31,7 +31,7 @@ public class CreateTodoItemCommandHandler(IApplicationDbContext context) : IRequ
 
         entity.AddDomainEvent(new TodoItemCreatedEvent(entity));
 
-        await _context.TodoItems.AddAsync(entity,cancellationToken);
+        await _context.TodoItems.AddAsync(entity, cancellationToken);
 
         await _context.SaveChangesAsync(cancellationToken);
 
