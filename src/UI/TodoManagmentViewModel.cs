@@ -110,49 +110,51 @@ internal class TodoManagmentViewModel : Screen
         }
     }
 
-    private async Task RefereshTodoListSelectedAsync()
+    private async Task RefereshTodoListAsync(int todoListId)
     {
         var selectedListId = SelectedTodoList?.Id;
 
-        if (selectedListId.HasValue && selectedListId.Value > 0)
+        var todoListUpdated = await _sender.Send(new GetTodoQuery(todoListId));
+
+        var todoListOutdated = TodoLists.FirstOrDefault(x => x.Id == todoListId);
+
+        if (todoListOutdated != null)
         {
-            var selectedTodoListUpdated = await _sender.Send(new GetTodoQuery(selectedListId.Value));
+            var indexToAddTodoListUpdated = TodoLists.IndexOf(todoListOutdated);
 
-            if(_memoryCache.TryGetValue<IList<TodoListDto>>(nameof(TodoLists), out var todoListsCached))
-            {
-                var selectedTodoListOutdated = todoListsCached.First(x => x.Id == selectedListId.Value);
-
-                var indexToAddTodoListUpdated = TodoLists.IndexOf(selectedTodoListOutdated);
-
-                TodoLists.RemoveAt(indexToAddTodoListUpdated);
-                TodoLists.Insert(indexToAddTodoListUpdated,selectedTodoListUpdated);
-                
-                TodoLists = [.. TodoLists];
-                
-                SelectedTodoList = selectedTodoListUpdated;
-
-                _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, 2, 0));//TODO: For static values set on appsettings.
-            }
+            TodoLists.RemoveAt(indexToAddTodoListUpdated);
+            TodoLists.Insert(indexToAddTodoListUpdated, todoListUpdated);
         }
+        else
+        {
+            TodoLists.Add(todoListUpdated);
+        }
+
+        TodoLists = [.. TodoLists];
+
+        if (selectedListId.HasValue && selectedListId.Value == todoListUpdated.Id)
+            SelectedTodoList = todoListUpdated;
+
+        _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, 2, 0));//TODO: For static values set on appsettings.
     }
     private async void AddTodoList(object obj)
     {
         var todoList = new TodoListViewModel(_sender);
 
         await _windowManager.ShowDialogAsync(todoList)
-                            .ContinueWith(prevTask => RefereshTodoListsAsync());
+                            .ContinueWith(prevTask => RefereshTodoListAsync(todoList.Id));
     }
 
     private async void AddTodoItem(object obj)
     {
         var todoItem = new TodoItemViewModel(_sender, SelectedTodoList.Id);
         await _windowManager.ShowDialogAsync(todoItem)
-                            .ContinueWith(prevTask => RefereshTodoListSelectedAsync());
+                            .ContinueWith(prevTask => RefereshTodoListAsync(SelectedTodoList.Id));
     }
 
     private async void DoneTodoItem(object obj)
     {
         await _sender.Send(new DoneTodoItemCommand(SelectedItem.Id))
-                     .ContinueWith(prevTask => RefereshTodoListSelectedAsync());
+                     .ContinueWith(prevTask => RefereshTodoListAsync(SelectedTodoList.Id));
     }
 }

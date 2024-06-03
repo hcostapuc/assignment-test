@@ -21,6 +21,18 @@ public class TodoListViewModel : Screen
         }
     }
 
+    private int _id;
+    public int Id
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            NotifyOfPropertyChange(() => Id);
+        }
+    }
+
+
     public ICommand SaveCommand { get; }
     public ICommand CloseCommand { get; }
 
@@ -36,7 +48,7 @@ public class TodoListViewModel : Screen
     {
         try
         {
-            await _sender.Send(new CreateTodoListCommand(Title));
+            Id = await _sender.Send(new CreateTodoListCommand(Title));
             await TryCloseAsync(true);
         }
         catch (ValidationException validationException)
