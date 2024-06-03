@@ -67,7 +67,8 @@ We wish you the best of luck and look forward to reviewing your submission!
   - I believe the API-related work may need to be separated into a different project. Unlike the test, the API typically returns objects and involves manipulating HTTP requests. Therefore, it would be beneficial to create additional files and organize the integration data within a separate project dedicated to WeatherForecast integration.
   - Segregate the modules weatherforecast and todolist using solution folders, depending of the scenario use even different datacontexts.
   - Implement options pattern, in order to get information from appsettings.
+  - Change plural representation from S to Collection, thus being clearer and avoiding the creation of the wrong class.
 - **User experience**
-- Make the views more visually appealing by applying margins, paddings between the components, adding icons, etc. Focusing on the efficiency of usability.
+  - Make the views more visually appealing by applying margins, paddings between the components, adding icons, etc. Focusing on the efficiency of usability.
 - **Functionality**
-- Create funcionality to delete a todolist and todoitem.
+  - Create funcionality to delete a todolist and todoitem.
