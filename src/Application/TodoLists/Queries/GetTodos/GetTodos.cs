@@ -6,16 +6,10 @@ namespace Assignment.Application.TodoLists.Queries.GetTodos;
 [Authorize]
 public record GetTodosQuery : IRequest<IList<TodoListDto>>;
 
-public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, IList<TodoListDto>>
+public class GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetTodosQuery, IList<TodoListDto>>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetTodosQueryHandler(IApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly IApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<IList<TodoListDto>> Handle(GetTodosQuery request, CancellationToken cancellationToken)
     {

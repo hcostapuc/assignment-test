@@ -4,14 +4,9 @@ namespace Assignment.Application.TodoItems.Commands.DoneTodoItem;
 
 public record DoneTodoItemCommand(int Id) : IRequest;
 
-public class DoneTodoItemCommandHandler : IRequestHandler<DoneTodoItemCommand>
+public class DoneTodoItemCommandHandler(IApplicationDbContext context) : IRequestHandler<DoneTodoItemCommand>
 {
-    private readonly IApplicationDbContext _context;
-
-    public DoneTodoItemCommandHandler(IApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly IApplicationDbContext _context = context;
 
     public async Task Handle(DoneTodoItemCommand request, CancellationToken cancellationToken)
     {

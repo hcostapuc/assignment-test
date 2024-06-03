@@ -6,23 +6,15 @@ namespace Assignment.Application.Country.Queries.GetCountryCollection;
 [Authorize]
 public record GetCountryCollectionQuery : IRequest<IList<CountryDto>>;
 
-public class GetCountryCollectionQueryHandler : IRequestHandler<GetCountryCollectionQuery, IList<CountryDto>>
+public class GetCountryCollectionQueryHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetCountryCollectionQuery, IList<CountryDto>>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly IApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
-    public GetCountryCollectionQueryHandler(IApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
-    public async Task<IList<CountryDto>> Handle(GetCountryCollectionQuery request, CancellationToken cancellationToken)
-    {
-        return await _context.Country
+    public async Task<IList<CountryDto>> Handle(GetCountryCollectionQuery request, CancellationToken cancellationToken) =>
+         await _context.Country
                 .AsNoTracking()
                 .ProjectTo<CountryDto>(_mapper.ConfigurationProvider)
                 .OrderBy(t => t.Name)
                 .ToListAsync(cancellationToken);
-    }
 }
