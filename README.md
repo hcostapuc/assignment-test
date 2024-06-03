@@ -40,7 +40,7 @@ The following features need to be implemented:
     - [x] The first dropdown for selecting a Country.
     - [x] The second dropdown for selecting a City, which updates based on the selected Country.
     - [x] Selecting a City triggers a mock API call (interface definition and a fake implementation required) to fetch and display the temperature of the city and display it on the form.
-    - Writing tests for this feature is a plus.
+    - [x] Writing tests for this feature is a plus.
 
 - [x] **Simple Caching System**:
   - [x] Develop a simple in-memory cache from scratch without using any external caching libraries, including Microsoft's. Your implementation should support basic operations such as retrieving a cached value and resetting the cache using a cache key.
