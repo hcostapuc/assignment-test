@@ -13,7 +13,7 @@ public class CreateTodoListCommandHandler(IApplicationDbContext context) : IRequ
     {
         var entity = new TodoList() { Title = request.Title };
 
-        _context.TodoLists.Add(entity);
+        await _context.TodoLists.AddAsync(entity, cancellationToken);
 
         await _context.SaveChangesAsync(cancellationToken);
 
