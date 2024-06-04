@@ -12,7 +12,7 @@ internal class TodoManagmentViewModel : Screen
     private readonly ISender _sender;
     private readonly IWindowManager _windowManager;
     private readonly IMemoryCache _memoryCache;
-
+    private const int TODOLIST_CACHE_MINUTE = 2;//TODO: For static values set on appsettings using options pattern
 
     private IList<TodoListDto> _todoLists;
     public IList<TodoListDto> TodoLists
@@ -94,20 +94,16 @@ internal class TodoManagmentViewModel : Screen
         var selectedListId = SelectedTodoList?.Id;
 
         if (_memoryCache.TryGetValue<IList<TodoListDto>>(nameof(TodoLists), out var todoListCached))
-        {
             TodoLists = todoListCached;
-        }
         else
         {
             TodoLists = await _sender.Send(new GetTodosQuery());
 
-            _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, 2, 0));//TODO: For static values set on appsettings.
+            _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, TODOLIST_CACHE_MINUTE, 0));
         }
 
         if (selectedListId.HasValue && selectedListId.Value > 0)
-        {
             SelectedTodoList = TodoLists.FirstOrDefault(list => list.Id == selectedListId.Value);
-        }
     }
 
     private async Task RefereshTodoListAsync(int todoListId)
@@ -135,7 +131,7 @@ internal class TodoManagmentViewModel : Screen
         if (selectedListId.HasValue && selectedListId.Value == todoListUpdated.Id)
             SelectedTodoList = todoListUpdated;
 
-        _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, 2, 0));//TODO: For static values set on appsettings.
+        _memoryCache.Set(nameof(TodoLists), TodoLists, new TimeSpan(0, TODOLIST_CACHE_MINUTE, 0));
     }
     private async void AddTodoList(object obj)
     {
