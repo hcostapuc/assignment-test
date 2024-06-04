@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Assignment.Application.TodoLists.Commands.CreateTodoList;
+using Assignment.UI.Models;
 using Caliburn.Micro;
 using MediatR;
 using ValidationException = Assignment.Application.Common.Exceptions.ValidationException;
@@ -9,6 +9,7 @@ namespace Assignment.UI;
 public class TodoListViewModel : Screen
 {
     private readonly ISender _sender;
+    private readonly IWindowManager _windowManager;
 
     private string _title;
     public string Title
@@ -36,10 +37,11 @@ public class TodoListViewModel : Screen
     public ICommand SaveCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public TodoListViewModel(ISender sender)
+    public TodoListViewModel(ISender sender,
+                            IWindowManager windowManager)
     {
         _sender = sender;
-
+        _windowManager = windowManager;
         SaveCommand = new RelayCommand(SaveExecute);
         CloseCommand = new RelayCommand(CloseExecute);
     }
@@ -53,12 +55,14 @@ public class TodoListViewModel : Screen
         }
         catch (ValidationException validationException)
         {
-            MessageBox.Show(validationException.DisplayErrorsValueText('\n'), nameof(validationException));
+            var popUpValidationError = new PopUpValidationErrorViewModel(new PopUpValidationErrorModel
+            {
+                MessageErrorCollection = validationException.Errors.Values.SelectMany(a => a).ToList()
+            });
+            await _windowManager.ShowDialogAsync(popUpValidationError);
         }
     }
 
-    private async void CloseExecute(object parameter)
-    {
+    private async void CloseExecute(object parameter) =>
         await TryCloseAsync(false);
-    }
 }

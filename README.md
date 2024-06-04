@@ -30,8 +30,8 @@ This application already contains the following features, but there might be som
 
 ## New Features
 The following features need to be implemented:
-- **Displaying Error Messages**:
-  - Add a feature to display validation errors as pop-ups based on MVVM design, without using the MessageBox component.
+- [x] **Displaying Error Messages**:
+  - [x] Add a feature to display validation errors as pop-ups based on MVVM design, without using the MessageBox component.
 
 - **Weather Forecast form**:
   - [x] Add two new entities, Country and City, with a one-to-many relationship.
@@ -68,7 +68,9 @@ We wish you the best of luck and look forward to reviewing your submission!
   - Segregate the modules weatherforecast and todolist using solution folders, depending of the scenario use even different datacontexts.
   - Implement options pattern, in order to get information from appsettings.
   - Change plural representation from S to Collection, thus being clearer and avoiding the creation of the wrong class.
+  - Implement log.
+  - If need to create a message box customized it using window instead screen
 - **User experience**
-  - Make the views more visually appealing by applying margins, paddings between the components, adding icons, etc. Focusing on the efficiency of usability.
+  - Make the views more visually appealing by applying margins, paddings between the components, adding icons, modern UI using Material Design and etc. Focusing on the efficiency of usability.
 - **Functionality**
   - Create funcionality to delete a todolist and todoitem.

@@ -135,7 +135,7 @@ internal class TodoManagmentViewModel : Screen
     }
     private async void AddTodoList(object obj)
     {
-        var todoList = new TodoListViewModel(_sender);
+        var todoList = new TodoListViewModel(_sender, _windowManager);
 
         await _windowManager.ShowDialogAsync(todoList)
                             .ContinueWith(prevTask => RefereshTodoListAsync(todoList.Id));
@@ -143,7 +143,7 @@ internal class TodoManagmentViewModel : Screen
 
     private async void AddTodoItem(object obj)
     {
-        var todoItem = new TodoItemViewModel(_sender, SelectedTodoList.Id);
+        var todoItem = new TodoItemViewModel(_sender, SelectedTodoList.Id, _windowManager);
         await _windowManager.ShowDialogAsync(todoItem)
                             .ContinueWith(prevTask => RefereshTodoListAsync(SelectedTodoList.Id));
     }

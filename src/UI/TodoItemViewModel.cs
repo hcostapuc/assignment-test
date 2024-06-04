@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Assignment.Application.Common.Exceptions;
 using Assignment.Application.TodoItems.Commands.CreateTodoItem;
 using Assignment.Application.TodoLists.Queries.GetTodos;
 using Assignment.Domain.Enums;
+using Assignment.UI.Models;
 using Caliburn.Micro;
 using MediatR;
 
@@ -12,6 +12,7 @@ namespace Assignment.UI;
 public class TodoItemViewModel : Screen
 {
     private readonly ISender _sender;
+    private readonly IWindowManager _windowManager;
 
     private TodoItemDto _currentItem;
     public TodoItemDto CurrentItem
@@ -29,9 +30,13 @@ public class TodoItemViewModel : Screen
     public ICommand SaveCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public TodoItemViewModel(ISender sender, int listId)
+    public TodoItemViewModel(ISender sender,
+                            int listId,
+                            IWindowManager windowManager)
     {
         _sender = sender;
+
+        _windowManager = windowManager;
 
         CurrentItem = new TodoItemDto() { ListId = listId };
         SaveCommand = new RelayCommand(SaveExecute);
@@ -64,12 +69,14 @@ public class TodoItemViewModel : Screen
         }
         catch (ValidationException validationException)
         {
-            MessageBox.Show(validationException.DisplayErrorsValueText('\n'), nameof(validationException));
+            var popUpValidationError = new PopUpValidationErrorViewModel(new PopUpValidationErrorModel
+            {
+                MessageErrorCollection = validationException.Errors.Values.SelectMany(a => a).ToList()
+            });
+            await _windowManager.ShowDialogAsync(popUpValidationError);
         }
     }
 
-    private async void CloseExecute(object parameter)
-    {
+    private async void CloseExecute(object parameter) =>
         await TryCloseAsync(false);
-    }
 }
